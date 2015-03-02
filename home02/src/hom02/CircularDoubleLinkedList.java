@@ -6,7 +6,7 @@ package hom02;
  * @param <E> Datatype for the linked list
  */
 public class CircularDoubleLinkedList <E> implements 
-		CircularlyDoubleLinkedListInterface<E>{
+		CircularlyDoubleLinkedListInterface<E>, Cloneable {
 	
 	//------------ nested Node class ------------
 	private static class Node<E> {
@@ -49,11 +49,15 @@ public class CircularDoubleLinkedList <E> implements
 	public CircularDoubleLinkedList() {
 		//constructs an empty list
 	}
+	
+	//------------------------ Accessor Methods ------------------------------
+	
 	/** Returns the number of elements in the list */
 	@Override
 	public int size() {
 		return count;
 	}
+	
 	/** Returns true if the the list is empty, false if not */
 	@Override
 	public boolean isEmpty() {
@@ -79,6 +83,8 @@ public class CircularDoubleLinkedList <E> implements
 	public E last() {
 		return tail.getElement();
 	}
+	
+	//------------------------ Mutator Methods ------------------------------
 	
 	/** 
 	 * Adds an element to the front of the list.
@@ -143,7 +149,23 @@ public class CircularDoubleLinkedList <E> implements
 		return temp.getElement();
 	}
 	
+	/**
+	 * Rotates the list forwards, assigning the tail reference to the next
+	 * node in the list
+	 */
+	public void rotate() {
+		if(tail != null)
+			tail = tail.getNext();
+	}
 	
+	/**
+	 * Rotates the list backwards, assigning the tail reference to the previous
+	 * node in the list
+	 */
+	public void rotateBackward() {
+		if(tail != null)
+			tail = tail.getPrevious();
+	}
 	
 	
 }
