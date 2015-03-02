@@ -67,20 +67,24 @@ public class CircularDoubleLinkedList <E> implements
 	/**
 	 * Returns, without removing, the first element in the list.
 	 * This is the element immediately following the tail reference.
+	 * If the list is empty, null is returned.
 	 * @return 
 	 */
 	@Override
-	//TODO: RETURN NULL / THROW EXCEPTION 
 	public E first() {
+		if(isEmpty())
+			return null;
 		return tail.getNext().getElement();
 	}
 	/**
 	 * Returns, without removing, the last element in the list.
 	 * This is the tail reference.
+	 * If the list is empty, null is returned.
 	 */
 	@Override
-	//TODO: RETURN NULL / THROW EXCEPTION
 	public E last() {
+		if(isEmpty())
+			return null;
 		return tail.getElement();
 	}
 	
