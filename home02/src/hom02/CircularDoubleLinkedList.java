@@ -137,6 +137,7 @@ public class CircularDoubleLinkedList <E> implements
 		} else { 
 			tail.setNext(tail.getNext().getNext());
 		}
+		count--;
 		return temp.getElement();
 	}
 	
@@ -153,6 +154,7 @@ public class CircularDoubleLinkedList <E> implements
 		tail.getPrevious().setNext(tail.getNext());
 		tail.getNext().setPrevious(tail.getPrevious());
 		tail = tail.getPrevious();
+		count--;
 		return temp.getElement();
 	}
 	
