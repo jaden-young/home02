@@ -181,8 +181,10 @@ public class CircularDoubleLinkedList <E> implements
 			other.tail = new Node<>(tail.getElement(), other.tail, other.tail);
 			Node<E> temp = tail.getNext();
 			while(temp != tail) {
-				
+				other.addFirst(temp.getElement());
+				temp = temp.getNext();
 			}
+			return other;
 		}
 		
 	}
