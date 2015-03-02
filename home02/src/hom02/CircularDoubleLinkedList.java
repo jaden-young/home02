@@ -98,8 +98,11 @@ public class CircularDoubleLinkedList <E> implements
 		if(count == 0) {
 			tail = new Node<>(newElement, tail, tail);
 		} else {
-			tail.setNext(
-					new Node<>(newElement, tail, tail.getNext().getNext()));
+			Node<E> temp = new Node<>(newElement, tail, tail.getNext());
+			tail.setNext(temp);
+			temp.getNext().setPrevious(temp);
+			if(count == 1)
+				tail.setPrevious(temp);
 		}
 		count++;
 	}
@@ -167,5 +170,20 @@ public class CircularDoubleLinkedList <E> implements
 			tail = tail.getPrevious();
 	}
 	
-	
+	/** Returns a clone of the entire linked list
+	 * @throws java.lang.CloneNotSupportedException 
+	 */
+	@Override
+	public CircularDoubleLinkedList clone() throws CloneNotSupportedException {
+		CircularDoubleLinkedList other = 
+				(CircularDoubleLinkedList) super.clone();
+		if(count > 0) {
+			other.tail = new Node<>(tail.getElement(), other.tail, other.tail);
+			Node<E> temp = tail.getNext();
+			while(temp != tail) {
+				
+			}
+		}
+		
+	}
 }
