@@ -172,6 +172,7 @@ public class CircularDoubleLinkedList <E> implements
 	
 	/** Returns a clone of the entire linked list
 	 * @throws java.lang.CloneNotSupportedException 
+	 * @return Reference to a deep copy of the entire linked list
 	 */
 	@Override
 	public CircularDoubleLinkedList clone() throws CloneNotSupportedException {
@@ -186,5 +187,26 @@ public class CircularDoubleLinkedList <E> implements
 			}
 		}
 		return other;
+	}
+	
+	/**
+	 * Compares two lists for equality
+	 * @param Obj Object to be compared against
+	 * @return true if lists contain identical nodes, false if not
+	 */
+	@Override
+	public boolean equals(Object Obj) {
+		if(!(Obj instanceof CircularDoubleLinkedList))
+			return false;
+		CircularDoubleLinkedList other = (CircularDoubleLinkedList)Obj;
+		if(count != other.size())
+			return false;
+		Node<E> thisTemp = tail.getNext();
+		Node<E> otherTemp = other.tail.getNext();
+		while(thisTemp != tail) {
+			if(thisTemp.getElement() != otherTemp.getElement())
+				return false;
+		}
+		return true;
 	}
 }
