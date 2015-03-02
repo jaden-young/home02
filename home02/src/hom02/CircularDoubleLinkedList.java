@@ -184,8 +184,7 @@ public class CircularDoubleLinkedList <E> implements
 				other.addFirst(temp.getElement());
 				temp = temp.getNext();
 			}
-			return other;
 		}
-		
+		return other;
 	}
 }
