@@ -97,16 +97,13 @@ public class CircularDoubleLinkedList <E> implements
 	 */
 	@Override
 	public void addFirst(E newElement) {
-		//when adding the first item, the references for next and previous
-		//are set to itself
 		if(count == 0) {
 			tail = new Node<>(newElement, tail, tail);
 		} else {
 			Node<E> temp = new Node<>(newElement, tail, tail.getNext());
-			tail.setNext(temp);
-			temp.getNext().setPrevious(temp);
 			if(count == 1)
 				tail.setPrevious(temp);
+			tail.setNext(temp);
 		}
 		count++;
 	}
