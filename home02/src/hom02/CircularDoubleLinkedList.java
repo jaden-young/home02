@@ -92,22 +92,40 @@ public class CircularDoubleLinkedList <E> implements
 	
 	/** 
 	 * Adds an element to the front of the list.
-	 * When adding the first element, the references for the next and previous
-	 * nodes will be set to the first node
+	 * When adding the first element, the next and previous are set to null.
 	 */
 	@Override
 	public void addFirst(E newElement) {
-		if(count == 0) {
-			tail = new Node<>(newElement, tail, tail);
-		} else {
-			Node<E> temp = new Node<>(newElement, tail, tail.getNext());
-			if(count == 1)
+		switch(count) {
+			case 0:
+				tail = new Node<>(newElement, null, null);
+				count++;
+				break;
+			case 1:
+				Node<E> temp = new Node<>(newElement, null, null);
+				temp.setNext(tail);
+				temp.setPrevious(tail);
+				tail.setNext(temp);
 				tail.setPrevious(temp);
-			tail.setNext(temp);
+				count++;
+				break;
+			default:
+				Node<E> temp2 = new Node<>(newElement, null, null);
+				temp2.setPrevious(tail);
+				temp2.setNext(tail.getNext());
+				tail.getNext().setPrevious(temp2);
+				tail.setNext(temp2);
+				count++;
+				break;
 		}
-		count++;
 	}
 	
+	private void addBetween(E newElement, Node<E> prev, Node<E> succ) {
+		Node<E> newest = new Node<>(newElement, prev, succ);
+		prev.setNext(newest);
+		succ.setPrevious(newest);
+		count++;
+	}
 	/**
 	 * Adds an element to the end of the list.
 	 * When adding the first element, the references for the next and previous
@@ -121,30 +139,11 @@ public class CircularDoubleLinkedList <E> implements
 	
 	/**
 	 * Removes and returns the first element of the list.
-	 * If the list is empty, null is returned.
-	 * @return Element stored in the node that was removed
-	 */
-	@Override
-	public E removeFirst() {
-		if(isEmpty())
-			return null;
-		Node<E> temp = tail.getNext();
-		if(temp == tail) {
-			tail = null;
-		} else { 
-			tail.setNext(tail.getNext().getNext());
-		}
-		count--;
-		return temp.getElement();
-	}
-	
-	/**
-	 * Removes and returns the last element of the list.
 	 * If the list is empty, null is returned
 	 * @return Element stored in the node that was removed
 	 */
 	@Override
-	public E removeLast() {
+	public E removeFirst() {
 		if(isEmpty())
 			return null;
 		Node<E> temp = tail;
@@ -154,6 +153,27 @@ public class CircularDoubleLinkedList <E> implements
 		count--;
 		return temp.getElement();
 	}
+	
+	/**
+	 * Removes and returns the last element of the list.
+	 * If the list is empty, null is returned.
+	 * @return Element stored in the node that was removed
+	 */
+	@Override
+	public E removeLast() {
+		if(isEmpty())
+			return null;
+		Node<E> temp = tail.getNext();
+		if(temp == null) {
+			tail = null;
+		} else { 
+			tail.setNext(tail.getNext().getNext());
+		}
+		count--;
+		return temp.getElement();
+	}
+	
+	
 	
 	/**
 	 * Rotates the list forwards, assigning the tail reference to the next
@@ -184,7 +204,7 @@ public class CircularDoubleLinkedList <E> implements
 		if(count > 0) {
 			other.tail = new Node<>(tail.getElement(), other.tail, other.tail);
 			Node<E> temp = tail.getNext();
-			while(temp != tail) {
+			for(int i = 0; i < count; i++) {
 				other.addFirst(temp.getElement());
 				temp = temp.getNext();
 			}
